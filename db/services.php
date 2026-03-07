@@ -14,7 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-// Author of this plugin: Peter Vanát <vanat.peter@gmail.com>
+/**
+ * Function declarations and service definition for QBank Remote Manager plugin.
+ * @package local_qbankremotemanager
+ * @copyright 2026 Peter Vanát <vanat.peter@gmail.com>
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -49,7 +54,7 @@ $functions = [
         'type'         => 'write',
         'capabilities' => 'moodle/question:add, moodle/question:editall, moodle/question:managecategory, moodle/question:moveall, moodle/question:useall',
         'ajax'         => true,
-    ]
+    ],
 ];
 
 $services = [

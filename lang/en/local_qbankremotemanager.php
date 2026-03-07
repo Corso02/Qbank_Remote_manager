@@ -16,8 +16,14 @@
 
 // Author of this plugin: Peter Vanát <vanat.peter@gmail.com>
 
-defined('MOODLE_INTERNAL') || die();
+/**
+ * English localization for QBank Remote Manager plugin.
+ * @package local_qbankremotemanager
+ * @copyright 2026 Peter Vanát <vanat.peter@gmail.com>
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
+defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'QBank Remote Manager';
 $string['service_name'] = 'QBank Remote Manager API';

@@ -19,7 +19,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_qbankremotemanager';
-$plugin->version = 2025031302;
+$plugin->version = 2025031303;
 $plugin->requires = 2022041912;
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.0.1';
+$plugin->release = '1.0.2';
