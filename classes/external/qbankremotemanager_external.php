@@ -263,7 +263,7 @@ class qbankremotemanager_external extends external_api {
      * You can use webservice/upload.php "Endpoint" to upload the file
      * The only supported file format is Moodle XML.
      * 
-     * @param int $courseId ID of the course you want to import the questions to
+     * @param int $courseid ID of the course you want to import the questions to
      * @param int $itemid ID of the file retrieved after uploading the file to the draft area
      * 
      * @return object with the status. The status can be either "OK" or "ERROR", when error is present you will recieve error message with it. If everything went fine you will recieve number of imported questions.
@@ -421,7 +421,7 @@ class qbankremotemanager_external extends external_api {
     /**
      * Function used to add new test with given config to the course.
      * 
-     * @param object $config config from the user
+     * @param object $validated_config config from the user
      * @param object $course course you want to work with
     */
     private static function add_test($validated_config, $course){
@@ -597,8 +597,8 @@ class qbankremotemanager_external extends external_api {
      * @param object $config whole config from user
      * @param string $key key for the value we want to validate
      * @param int $default default value to use when value with given $key is not in $config
-     * @param int $max max valid value
      * @param int $min min valid value
+     * @param int $max max valid value
      * 
      * @return int validated config value
     */
@@ -707,7 +707,7 @@ class qbankremotemanager_external extends external_api {
     /**
      * Helper function to add question to given quiz
      * 
-     * @param array $questions_idx list of question ids we want to include in given quiz
+     * @param array $question_ids list of question ids we want to include in given quiz
      * @param object $quiz quiz we want to import questions to
     */
     private static function add_questions($question_ids, $quiz){
