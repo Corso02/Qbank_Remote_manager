@@ -791,7 +791,7 @@ class qbankremotemanager_external extends external_api
      * @return object sanitized config
      */
     private static function prepare_quiz_data(array $config, $course) {
-        global $DB;
+        global $DB, $CFG;
 
         // We want to use system default value if the value was not set.
         $quizconfig = get_config('quiz');
