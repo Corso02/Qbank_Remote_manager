@@ -124,3 +124,4 @@ $string['timeopen_desc'] = 'Unix timestamp when the quiz opens.';
 $string['title_desc'] = 'Title of the given category.';
 $string['visible_desc'] = 'Visibility of the quiz (1 for show, 0 for hide).';
 $string['visibleoncoursepage_desc'] = 'Whether the activity is visible on the course page.';
+$string["shuffle_desc"] = "Whether to shuffle questions when adding them to quiz (1 for yes, 0 for no).";

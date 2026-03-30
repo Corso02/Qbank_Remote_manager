@@ -432,6 +432,12 @@ class qbankremotemanager_external extends external_api
                 VALUE_DEFAULT,
                 null
             ),
+            "shuffle" => new external_value(
+                PARAM_INT, 
+                get_string('shuffle_desc', 'local_qbankremotemanager'), 
+                VALUE_DEFAULT, 
+                0
+            ),
         ]);
     }
 
@@ -450,12 +456,12 @@ class qbankremotemanager_external extends external_api
      * The status can be either "OK" or "ERROR", when error is present you will recieve error message with it.
      * If everything went fine you will recieve number of imported questions.
      */
-    public static function upload_quiz($config, $itemid, $questionbankid = null) {
+    public static function upload_quiz($config, $itemid, $questionbankid = null, $shuffle = 0) {
         global $DB, $CFG;
 
         $params = self::validate_parameters(
             self::upload_quiz_parameters(),
-            ['config' => $config, 'itemid' => $itemid, "questionbankid" => $questionbankid]
+            ['config' => $config, 'itemid' => $itemid, "questionbankid" => $questionbankid, "shuffle" => $shuffle]
         );
 
         if ($CFG->version >= 2025041400 && $questionbankid == null) {
@@ -502,7 +508,7 @@ class qbankremotemanager_external extends external_api
 
         $cmid = self::add_test($validatedconfig, $course);
 
-        self::add_questions_to_quiz($cmid, $addedquestionids, $course);
+        self::add_questions_to_quiz($cmid, $addedquestionids, $course, $shuffle);
 
         return ['quizid' => $cmid, 'status' => 'OK', "num_of_questions" => count($addedquestionids)];
     }
@@ -1286,8 +1292,9 @@ class qbankremotemanager_external extends external_api
      * @param int $cmid course module id
      * @param array $questionids array of question ids we want to add to quiz
      * @param object $course course we are working in
+     * @param bool $shuffle whether to shuffle questions when adding them to quiz, default is false 
      */
-    private static function add_questions_to_quiz($cmid, $questionids, $course) {
+    private static function add_questions_to_quiz($cmid, $questionids, $course, $shuffle = true) {
         [$quiz, $cm] = get_module_from_cmid($cmid);
 
         $quizsettingsexists = class_exists("mod_quiz\quiz_settings");
@@ -1299,6 +1306,11 @@ class qbankremotemanager_external extends external_api
             self::add_questions($questionids, $quiz);
 
             $gradecalculator->recompute_quiz_sumgrades();
+
+            if ($shuffle) {
+                $structure = $quizobj->get_structure();
+                $structure->set_section_shuffle(reset($structure->get_slots())->section->id, 1);
+            }
         } else {
             /* In older versions (< 4.2) class quiz settings doesn't exists,
              * so we use older way of adding questions and updatings grades.
@@ -1306,6 +1318,12 @@ class qbankremotemanager_external extends external_api
             self::add_questions($questionids, $quiz);
             quiz_delete_previews($quiz);
             quiz_update_sumgrades($quiz);
+
+            if ($shuffle) {
+                $quizobj = new \quiz($quiz, $cm, $course);
+                $structure = $quizobj->get_structure();
+                $structure->set_section_shuffle(reset($structure->get_slots())->section->id, 1);
+            }
         }
     }
 
